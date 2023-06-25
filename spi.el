@@ -67,7 +67,7 @@ If PKG has already existed, then try to reinstall it."
       (spi-remove pkg))
     (message "Fetching %s..." pkg-name)
     (with-temp-buffer
-      (if (= (call-process "git" nil t
+      (if (= (call-process "git" nil t nil
                            "clone" url dir)
              0)
           (spi-build pkg)
