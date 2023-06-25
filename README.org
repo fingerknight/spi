@@ -1,0 +1,31 @@
+* Simple Package Installer
+A simple package installer for Emacs based on /Git/. No VC, no branch choosing, no special commit, just Git and compile.
+
+With small inspriation from [[https://bitbucket.org/zbelial/pie][PIE]].
+
+* Usage
+#+begin_src emacs-lisp
+(add-to-list 'load-path "/path/to/spi")
+(require 'spi)
+(setq spi-repo-directory "/path/to/original/package"
+	  spi-build-directory "/path/to/built/package")
+
+;; Check if package is installed
+(spi-installed-p 'dash)
+
+;; Install package
+(spi-install 'dash "https://github.com/magnars/dash.el")
+
+;; Update package
+(spi-update 'dash)
+
+;; Update All pacakges
+(spi-update-all)
+
+;; Remove package
+(spi-remove 'dash)
+#+end_src
+
+* Appendix
+- This package just provides very simple funcionalites. *It do not handle with the relationship of packages.* User must be very careful of the order of installation.
+- ~spi-install~ always tries to install the package even it already exists. So user has to use a conditional control with ~spi-install-p~.
