@@ -94,7 +94,7 @@ PKG should be a symbol."
     (if (not (spi-installed-p pkg))
         (message "No such package: %s" pkg-name)
       (copy-directory src dst t t)
-      (dolist (file (directory-files-recursively src "^[^.].*"))
+      (dolist (file (directory-files-recursively dst "^[^.].*"))
         (when (string= (file-name-extension file)
                        "el")
           (byte-compile-file file)))
