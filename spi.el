@@ -93,15 +93,12 @@ PKG should be a symbol."
       (delete-directory dst t))
     (if (not (spi-installed-p pkg))
         (message "No such package: %s" pkg-name)
-      (let ((byte-compile-dest-file-function #'spi--byte-compile-dest-file))
-        (dolist (file (directory-files-recursively src "^[^.].*"))
-          (when (string= (file-name-extension file)
-                         "el")
-            (make-directory (file-name-directory
-                             (spi--byte-compile-dest-file file))
-                            t)
-            (byte-compile-file file)))
-        (add-to-list 'load-path dst)))))
+      (copy-directory src dst t t)
+      (dolist (file (directory-files-recursively src "^[^.].*"))
+        (when (string= (file-name-extension file)
+                       "el")
+          (byte-compile-file file)))
+      (add-to-list 'load-path dst))))
 
 (defun spi-update (pkg)
   "Update single package.
