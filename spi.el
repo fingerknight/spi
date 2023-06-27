@@ -48,6 +48,10 @@
   :type  'directory
   :group 'spi)
 
+(defun spi--all-pacakges ()
+  "Return a list containing all packages."
+  (mapcar #'intern (directory-files spi-repo-directory nil "[^.]")))
+
 (defun spi-installed-p (pkg)
   "If packages is installed.
 PKG should be a symbol."
@@ -94,7 +98,7 @@ PKG should be a symbol."
     (if (not (spi-installed-p pkg))
         (message "No such package: %s" pkg-name)
       (copy-directory src dst t t)
-      (dolist (file (directory-files-recursively dst "^[^.].*"))
+      (dolist (file (directory-files-recursively dst "\\.el$"))
         (when (string= (file-name-extension file)
                        "el")
           (byte-compile-file file)))
@@ -119,8 +123,8 @@ PKG should be a symbol"
 (defun spi-update-all ()
   "Update all packages."
   (interactive)
-  (dolist (pkg-name (directory-files spi-repo-directory nil "[^.]"))
-    (spi-update (intern pkg-name))))
+  (dolist (pkg spi--all-pacakges)
+    (spi-update pkg)))
 
 (defun spi-remove (pkg)
   "Remove package.
