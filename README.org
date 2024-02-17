@@ -1,3 +1,6 @@
+* Emacs now supports vc install
+Users can use ~package-vc-install~ to install external packages.
+
 * Simple Package Installer
 A simple package installer for Emacs based on /Git/. No VC, no branch choosing, no special commit, just Git and compile.
 
